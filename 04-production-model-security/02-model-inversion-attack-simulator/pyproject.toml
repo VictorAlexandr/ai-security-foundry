@@ -6,8 +6,14 @@ authors = [
     {name = "Victor Alexandre",email = "128709164+VictorAlexandr@users.noreply.github.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12, <3.13"
 dependencies = [
+    "torch (>=2.9.0,<3.0.0)",
+    "torchvision (>=0.24.0,<0.25.0)",
+    "adversarial-robustness-toolbox[pytorch] (>=1.20.1,<2.0.0)",
+    "numpy (>=2.3.4,<3.0.0)",
+    "matplotlib (>=3.10.7,<4.0.0)",
+    "click (>=8.3.0,<9.0.0)"
 ]
 
 
