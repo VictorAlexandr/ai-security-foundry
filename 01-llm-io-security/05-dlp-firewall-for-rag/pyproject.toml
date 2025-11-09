@@ -21,3 +21,20 @@ spacy = "^3.8.8"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "ruff (>=0.14.4,<0.15.0)"
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # Pyflakes (erros lógicos como variáveis não usadas)
+    "I",  # isort (ordenação de imports)
+    "C",  # flake8-comprehensions (melhores práticas em list comprehensions)
+    "B",  # flake8-bugbear (potenciais bugs e más práticas de design)
+]
