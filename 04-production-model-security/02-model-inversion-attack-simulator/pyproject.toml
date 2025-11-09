@@ -1,37 +1,35 @@
-[project]
+[tool.poetry]
 name = "02-model-inversion-attack-simulator"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "Victor Alexandre",email = "128709164+VictorAlexandr@users.noreply.github.com"}
-]
+authors = ["Victor Alexandre <128709164+VictorAlexandr@users.noreply.github.com>"]
 readme = "README.md"
-requires-python = ">=3.12, <3.13"
-dependencies = [
-    "torch (>=2.9.0,<3.0.0)",
-    "torchvision (>=0.24.0,<0.25.0)",
-    "adversarial-robustness-toolbox[pytorch] (>=1.20.1,<2.0.0)",
-    "numpy (>=2.3.4,<3.0.0)",
-    "matplotlib (>=3.10.7,<4.0.0)",
-    "click (>=8.3.0,<9.0.0)",
-    "requests (>=2.32.5,<3.0.0)",
-    "tqdm (>=4.67.1,<5.0.0)",
-    "kaggle (>=1.7.4.5,<2.0.0.0)",
-    "python-dotenv (>=1.2.1,<2.0.0)"
-]
+# Adicionando a configuração para dizer ao Poetry onde encontrar o código, se necessário
+packages = [{include = "src"}]
 
+[tool.poetry.dependencies]
+python = ">=3.12, <3.13"
+torch = ">=2.9.0,<3.0.0"
+torchvision = ">=0.24.0,<0.25.0"
+adversarial-robustness-toolbox = {version = ">=1.20.1,<2.0.0", extras = ["pytorch"]}
+numpy = ">=2.3.4,<3.0.0"
+matplotlib = ">=3.10.7,<4.0.0"
+click = ">=8.3.0,<9.0.0"
+requests = ">=2.32.5,<3.0.0"
+tqdm = ">=4.67.1,<5.0.0"
+kaggle = ">=1.7.4.5,<2.0.0.0"
+python-dotenv = ">=1.2.1,<2.0.0"
+scikit-learn = "^1.7.2"
+
+[tool.poetry.group.dev.dependencies]
+ruff = ">=0.14.4,<0.15.0"
+jupyter = ">=1.1.1,<2.0.0"
+deepnote = ">=0.2.3,<0.3.0"
+pytest = ">=9.0.0,<10.0.0"
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-[dependency-groups]
-dev = [
-    "ruff (>=0.14.4,<0.15.0)",
-    "jupyter (>=1.1.1,<2.0.0)",
-    "deepnote (>=0.2.3,<0.3.0)",
-    "pytest (>=9.0.0,<10.0.0)"
-]
 
 [tool.ruff]
 line-length = 99
