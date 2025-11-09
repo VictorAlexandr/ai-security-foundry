@@ -1,52 +1,46 @@
-import torchvision
 import logging
-import os
+from sklearn.datasets import fetch_lfw_people
 
 # Configuração do logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # --- CONFIGURAÇÕES ---
-DATA_DIR = "data"
-LFW_DIR = os.path.join(DATA_DIR, "lfw_home")
+# Pessoas com no mínimo 50 imagens, para garantir classes com dados suficientes
+MIN_FACES_PER_PERSON = 50
+DATA_DIR = "data" # scikit-learn gerenciará a subpasta 'lfw_home' aqui dentro
 
 def main():
     """
-    Usa o downloader embutido do torchvision para baixar e preparar
+    Usa o downloader embutido do scikit-learn para baixar e preparar
     o dataset Labeled Faces in the Wild (LFW).
+    Este método é o padrão da indústria, robusto e gerencia seu próprio cache.
     """
-    logging.info("Iniciando o download do dataset LFW usando torchvision.")
-    logging.info("Este processo é robusto e pode demorar alguns minutos.")
+    logging.info("Iniciando o download do dataset LFW usando scikit-learn.")
+    logging.info(f"Serão baixadas as imagens de pessoas com no mínimo {MIN_FACES_PER_PERSON} fotos.")
     
     try:
-        # O downloader do torchvision cuida de tudo: download, verificação e extração.
-        # 'LFWPeople' é para tarefas de classificação, que é o que precisamos.
-        dataset = torchvision.datasets.LFWPeople(
-            root=DATA_DIR,      # Diretório principal para os dados
-            split='train',      # Podemos usar qualquer split, só queremos os dados
-            download=True       # A mágica acontece aqui
+        # A mágica acontece aqui. O scikit-learn lida com o download,
+        # extração e cache de forma transparente.
+        fetch_lfw_people(
+            min_faces_per_person=MIN_FACES_PER_PERSON, 
+            data_home=DATA_DIR, # Especifica onde salvar
+            resize=0.4          # Reduz o tamanho para ser mais rápido
         )
         
-        # O downloader cria uma estrutura de pastas um pouco diferente, vamos apenas verificar
-        # se o diretório principal foi criado e contém dados.
-        if os.path.exists(LFW_DIR) and len(os.listdir(LFW_DIR)) > 0:
-             logging.info("Download e extração do LFW concluídos com sucesso.")
-             logging.info(f"Dados disponíveis em: {LFW_DIR}")
+        lfw_home_dir = os.path.join(DATA_DIR, "lfw_home")
+        if os.path.exists(lfw_home_dir):
+             logging.info("Download e preparação do LFW concluídos com sucesso.")
+             logging.info(f"Dados cacheados e prontos para uso em: {lfw_home_dir}")
         else:
-            # O downloader do torchvision cria a pasta lfw-py, vamos checar ela
-            lfw_py_dir = os.path.join(DATA_DIR, "lfw-py")
-            if os.path.exists(lfw_py_dir):
-                logging.info("Download e extração do LFW concluídos com sucesso.")
-                logging.info(f"Dados disponíveis em: {lfw_py_dir}")
-            else:
-                 raise FileNotFoundError("O diretório do LFW não foi encontrado após o download.")
+            raise FileNotFoundError("O diretório do LFW não foi encontrado após o download.")
 
     except Exception as e:
-        logging.error(f"Ocorreu um erro durante o download com torchvision: {e}")
-        logging.error("Verifique sua conexão de internet ou se há restrições de firewall.")
+        logging.error(f"Ocorreu um erro durante o download com scikit-learn: {e}")
         exit(1)
 
     logging.info("Script finalizado com sucesso.")
 
 
 if __name__ == "__main__":
+    import os
     main()
