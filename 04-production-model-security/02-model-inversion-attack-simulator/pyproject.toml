@@ -28,3 +28,16 @@ dev = [
     "deepnote (>=0.2.3,<0.3.0)",
     "pytest (>=9.0.0,<10.0.0)"
 ]
+
+[tool.ruff]
+line-length = 99
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
