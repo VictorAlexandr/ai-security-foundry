@@ -6,7 +6,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 # --- CONFIGURAÇÕES ---
 # Pessoas com no mínimo 50 imagens, para garantir classes com dados suficientes
-MIN_FACES_PER_PERSON = 50
+MIN_FACES_PER_PERSON = 70
 DATA_DIR = "data" # scikit-learn gerenciará a subpasta 'lfw_home' aqui dentro
 
 def main():
